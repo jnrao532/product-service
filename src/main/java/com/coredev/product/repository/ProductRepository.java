@@ -1,12 +1,12 @@
-/**
- * 
- */
 package com.coredev.product.repository;
+
+import com.coredev.product.domain.model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * @author Harikrishna
  *
  */
-public class ProductRepository {
+public interface ProductRepository extends JpaRepository<Product, String> {
 
 }
