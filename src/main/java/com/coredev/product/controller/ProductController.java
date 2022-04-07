@@ -38,7 +38,6 @@ public class ProductController {
     Product createProduct(@RequestBody Product product) {
     	product.setId(UUID.randomUUID().toString());
     	return repository.save(product);
-
     }
 
 }
