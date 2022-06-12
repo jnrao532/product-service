@@ -1,16 +1,11 @@
 package com.coredev.product.controller;
 
 import com.coredev.product.domain.model.Product;
-import com.coredev.product.repository.ProductRepository;
 
 import java.util.List;
-import java.util.UUID;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.coredev.product.service.ProductService;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Harikrishna
@@ -18,26 +13,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductController {
 
-    private final ProductRepository repository;
+    private final ProductService service;
 
-    ProductController(ProductRepository repository) {
-        this.repository = repository;
+    ProductController(ProductService service) {
+        this.service = service;
     }
     
     @GetMapping("/products/{id}")
     Product getProduct(@PathVariable String id) {
-    	return repository.findById(id).get();
+    	return service.fetch(id);
     }
     
     @GetMapping("/products")
     List<Product> getAllProducts(){
-    	return repository.findAll();
+    	return service.fetchAllProducts();
     }
 
     @PostMapping("/products")
     Product createProduct(@RequestBody Product product) {
-    	product.setId(UUID.randomUUID().toString());
-    	return repository.save(product);
+    	return service.save(product);
+    }
+
+    @DeleteMapping("/products/{id}")
+    String deleteProduct(@PathVariable String id){
+        return service.delete(id);
+
     }
 
 }
